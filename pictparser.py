@@ -44,6 +44,8 @@ for l in out:
         print "open %s %s" % (res, num)
         
         filename = res+num
+        if res == "PICT":
+            filename += ".pict" 
             
         working = open("output/" + filename, "wb")
         for a in range(0, 512):
