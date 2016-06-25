@@ -45,10 +45,10 @@ for l in out:
         print "done"
     # file data
     else:
-        cap = re.search('\".*\" ', l)
+        cap = re.search(r'^\s*\$\"(.*)\"\s*/\*.*\*/', l)
         if cap is None:
             continue
-        data = cap.group(0)
+        data = cap.group(1)
         data = data.translate(None, '"')
         for a in data.split(' '):
             if len(a) != 4:
