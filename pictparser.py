@@ -42,7 +42,6 @@ for l in out:
     # end of file
     elif re.match('\}\;', l):
         working.close()
-        print "done"
     # file data
     else:
         cap = re.search(r'^\s*\$\"(.*)\"\s*/\*.*\*/', l)
