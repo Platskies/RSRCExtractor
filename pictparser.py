@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import errno
 import re
 import struct
 import sys
@@ -26,16 +27,25 @@ if neededargs == 2:
 else:
     out = open(sys.argv[2], "ru")
 
+try:
+    os.mkdir("output")
+except OSError as error:
+    if error.errno != errno.EEXIST:
+        raise
+
 for l in out:
     if len(l) == 1:
         continue
     # start of file
-    if re.match('data \'PICT\'', l):
-        m = re.search('\(\d*\)', l)
-        num = m.group(0)
-        num = num.translate(None, '()')
-        print "open "+num
-        working = open("res"+num+".pct", "wb")
+    if re.match('data ', l):
+        m = re.search('\'(.*)\' \((.*)\)', l)
+        res = m.group(1)
+        num = m.group(2)
+        print "open %s %s" % (res, num)
+        
+        filename = res+num
+            
+        working = open("output/" + filename, "wb")
         for a in range(0, 512):
             s = struct.pack(">B", 0);
             working.write(s)
