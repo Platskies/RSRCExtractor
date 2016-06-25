@@ -1,4 +1,13 @@
-# pictparser
+# RSRCExtractor
+
+This fork allows you to extract any resource type, as raw binary data.
+
+Some notes:
+
+- Files are currently saved in output/ directory
+- PICT resources get .pict extension appended
+
+##Original README:
 
 What is this?
 
@@ -23,6 +32,7 @@ it out. The basic steps here are
 5) Save your image to a more modern format
 
 What do I need?
+
 - Python
 - Apple Developer tools with DeRez
 
