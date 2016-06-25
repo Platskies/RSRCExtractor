@@ -6,15 +6,26 @@ import struct
 import sys
 import subprocess
 
-if len(sys.argv) < 2:
-    print "Usage: "+sys.argv[0]+": <path to file>"
+def usage():
+    print "Usage: " + sys.argv[0] + ": [--skip-derez] <path to file>"
     sys.exit(1)
+    
+argc = len(sys.argv)
+if argc == 1: usage()
+neededargs = 2 if sys.argv[1] != "--skip-derez" else 3
+if argc < neededargs: usage()
 
-p = subprocess.Popen(["DeRez", "-only", "PICT", sys.argv[1]], \
-			stdout=subprocess.PIPE,\
-			stderr=subprocess.PIPE)
-out, err = p.communicate()
-out = out.split('\n')
+if neededargs == 2:
+    p = subprocess.Popen(["DeRez", "-only", "PICT", sys.argv[1]], \
+    			stdout=subprocess.PIPE)
+    out = p.communicate()
+    if p.returncode != 0:
+        sys.exit(p.returncode)
+
+    out = out.split('\n')
+else:
+    out = open(sys.argv[2], "ru")
+
 for l in out:
     if len(l) == 1:
         continue
